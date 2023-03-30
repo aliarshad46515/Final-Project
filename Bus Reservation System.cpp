@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class Bus{
+class BusReservationSystem {
     private:
         int busNumber;
         string driverName;
@@ -11,8 +11,9 @@ class Bus{
         string departureTime;
         string passengerNames[20];
         bool seatStatus[20];
+        double fare[20];
     public:
-        Bus(int busNumber, string driverName, string arrivalTime, string departureTime) {
+        BusReservationSystem(int busNumber, string driverName, string arrivalTime, string departureTime) {
             this->busNumber = busNumber;
             this->driverName = driverName;
             this->arrivalTime = arrivalTime;
@@ -20,6 +21,7 @@ class Bus{
             for (int i = 0; i < 20; i++) {
                 passengerNames[i] = " ";
                 seatStatus[i] = false;
+                fare[i] = 0;
             }
         }
         void displayBusDetails() {
@@ -30,15 +32,16 @@ class Bus{
             cout << "------------------------------------------" << endl;
         }
         void displaySeatDetails() {
-            cout << "Seat Number\tPassenger Name" << endl;
+            cout << "Seat Number\tPassenger Name\tFare" << endl;
             for (int i = 0; i < 20; i++) {
-                cout << i+1 << "\t\t" << passengerNames[i] << endl;
+                cout << i+1 << "\t\t" << passengerNames[i] << "\t\t" << fare[i] << endl;
             }
             cout << "------------------------------------------" << endl;
         }
         void bookSeat() {
             int seat;
             string name;
+            double fare;
             cout << "Enter seat number: ";
             cin >> seat;
             if (seat < 1 || seat > 20) {
@@ -51,8 +54,11 @@ class Bus{
             }
             cout << "Enter passenger name: ";
             cin >> name;
+            cout << "Enter fare: ";
+            cin >> fare;
             passengerNames[seat-1] = name;
             seatStatus[seat-1] = true;
+            this->fare[seat-1] = fare;
             cout << "Seat " << seat << " booked for " << name << "." << endl;
         }
         void cancelSeat() {
@@ -70,20 +76,46 @@ class Bus{
             cout << "Seat " << seat << " cancelled for " << passengerNames[seat-1] << "." << endl;
             passengerNames[seat-1] = " ";
             seatStatus[seat-1] = false;
+            fare[seat-1] = 0;
+        }
+        void searchPassenger() {
+            string name;
+            bool found = false;
+            cout << "Enter passenger name to search: ";
+            cin >> name;
+            for (int i = 0; i < 20; i++) {
+                if (passengerNames[i] == name) {
+                    found = true;
+                    cout << "Passenger " << name << " found in seat " << i+1 << " with fare " << fare[i] <<"." << endl;
+                }
+            }
+            if (!found) {
+                cout << "Passenger " << name << " not found in the bus!" << endl;
+            }
+        }
+        void displayTotalRevenue() {
+            double totalRevenue = 0;
+            for (int i = 0; i < 20; i++) {
+                totalRevenue += fare[i];
+            }
+            cout << "Total revenue: " << totalRevenue << endl;
         }
 };
 
+
 int main() {
-    Bus bus1(1, "Haider", "10:00", "11:30");
+    BusReservationSystem bus1(1, "Haider", "10:00", "11:30");
     int choice = 0;
-    while (choice != 5) {
+    while (choice != 7) {
         cout << "------------------------------------------" << endl;
-        cout << "Menu:" << endl;
+		cout << "Menu:" << endl;
         cout << "1. Display bus details" << endl;
         cout << "2. Display seat details" << endl;
         cout << "3. Book a seat" << endl;
         cout << "4. Cancel a seat" << endl;
-        cout << "5. Quit" << endl;
+        cout << "5. Total Revenue" << endl;
+        cout << "6. Search Passenger" << endl;
+        cout << "7. Quit" << endl;
         cout << "Enter your choice: ";
         cin >> choice;
         switch (choice) {
@@ -100,6 +132,12 @@ int main() {
             	bus1.cancelSeat();
             	break;
             case 5:
+            	bus1.displayTotalRevenue();
+            	break;
+            case 6:
+            	bus1.searchPassenger();
+            	break;
+            case 7:
             	cout << "Thank You For Using!!!" << endl;
             	break;
             default:
@@ -110,4 +148,3 @@ int main() {
     }
     return 0;
 }
-
