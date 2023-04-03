@@ -1,150 +1,309 @@
 #include <iostream>
 #include <string>
+#include <windows.h>
 
 using namespace std;
 
-class BusReservationSystem {
-    private:
-        int busNumber;
-        string driverName;
-        string arrivalTime;
-        string departureTime;
-        string passengerNames[20];
-        bool seatStatus[20];
-        double fare[20];
-    public:
-        BusReservationSystem(int busNumber, string driverName, string arrivalTime, string departureTime) {
-            this->busNumber = busNumber;
-            this->driverName = driverName;
-            this->arrivalTime = arrivalTime;
-            this->departureTime = departureTime;
-            for (int i = 0; i < 20; i++) {
-                passengerNames[i] = " ";
+class Bus{
+	private:
+		string driverName;
+		string arrivalTime;
+		string departTime;
+		string destination;
+		string origin;
+	public:
+		Bus(string driverName, string arrivalTime, string departTime, string destination, string origin){
+			this->driverName=driverName;
+			this->arrivalTime=arrivalTime;
+			this->departTime=departTime;
+			this->destination=destination;
+			this->origin=origin;
+		}
+		void getBus(){			
+			cout << "Enter Driver Name: ";
+			cin.ignore();
+			getline(cin, driverName);
+			cout << "Enter Arrival Time: ";
+			cin >> arrivalTime;
+			cout << "Enter Departuer Time: ";
+			cin >> departTime;
+			cout << "Enter Destination: ";
+			cin.ignore();
+			getline(cin, destination);
+			cout << "Enter Origin: ";
+			cin.ignore();
+			getline(cin, origin);
+		}
+		
+		void displayBus(){
+			cout << "Please Wait";
+	    	for(int i=0; i<3; i++){
+	    		Sleep (500);
+	    		cout << "-";
+			}
+			cout << "Driver Name: " << driverName << endl;
+			cout << "Arrival Time: " << arrivalTime << endl;
+			cout << "Departure Time: " << departTime << endl;
+			cout << "Destination: " << destination << endl;
+			cout << "Origin: " << origin << endl;
+		}
+		
+		void searchBus(){
+			string driver;
+			cout << "Enter Driver Name: ";
+			cin >> driver;
+			cout << "Please Wait";
+	    	for(int i=0; i<3; i++){
+	    		Sleep (500);
+	    		cout << "-";
+			}
+			cout << endl;
+			if(driverName==driver){
+				cout << "Bus Found!!!" << endl;
+				cout << "Driver Name: " << driverName << endl;
+				cout << "Arrival Time: " << arrivalTime << endl;
+				cout << "Departure Time: " << departTime << endl;
+				cout << "Destination: " << destination << endl;
+				cout << "Origin: " << origin << endl;
+			}
+			else
+				cout << "Bus Not Found!!!" << endl;
+		}
+};
+
+class Passenger{
+	private:
+		string psngrName[20];
+		int age;
+		char phone[11];
+		char CNIC[15];
+		bool seatStatus[20];
+		int fare[20];
+	public:
+		Passenger(){
+		for (int i = 0; i < 20; i++) {
+                psngrName[i] = " ";
                 seatStatus[i] = false;
                 fare[i] = 0;
             }
         }
-        void displayBusDetails() {
-            cout << "Bus Number: " << busNumber << endl;
-            cout << "Driver Name: " << driverName << endl;
-            cout << "Arrival Time: " << arrivalTime << endl;
-            cout << "Departure Time: " << departureTime << endl;
-            cout << "------------------------------------------" << endl;
-        }
-        void displaySeatDetails() {
-            cout << "Seat Number\tPassenger Name\tFare" << endl;
-            for (int i = 0; i < 20; i++) {
-                cout << i+1 << "\t\t" << passengerNames[i] << "\t\t" << fare[i] << endl;
-            }
-            cout << "------------------------------------------" << endl;
-        }
-        void bookSeat() {
-            int seat;
-            string name;
-            double fare;
-            cout << "Enter seat number: ";
-            cin >> seat;
-            if (seat < 1 || seat > 20) {
-                cout << "Invalid seat number!" << endl;
+		
+		void getInfo(){
+			int seat;
+			string name;
+			int fare;	
+			
+			cout << "Seat Number: ";
+			cin >> seat;
+			if (seat < 1 || seat > 20) {
+                cout << "Seat Unavailable!!!" << endl;
                 return;
             }
             if (seatStatus[seat-1]) {
                 cout << "Seat already booked!" << endl;
                 return;
             }
-            cout << "Enter passenger name: ";
-            cin >> name;
-            cout << "Enter fare: ";
+			cout << "Enter Name: ";
+			cin.ignore();
+			getline(cin, name);
+			cout << "Enter Age: ";
+			cin >> age;
+			cout << "Enter Phone Number: ";
+			cin >> phone;
+			cout << "Enter Your CNIC(With Hyphen)";
+			cin >> CNIC;
+			cout << "Enter fare: ";
             cin >> fare;
-            passengerNames[seat-1] = name;
+            
+			psngrName[seat-1] = name;
             seatStatus[seat-1] = true;
             this->fare[seat-1] = fare;
             cout << "Seat " << seat << " booked for " << name << "." << endl;
-        }
-        void cancelSeat() {
+                       
+		}
+		
+		void cancelSeat() {
             int seat;
-            cout << "Enter seat number: ";
+            cout << "Seat Number: ";
             cin >> seat;
+            cout << "Please Wait";
+	    	for(int i=0; i<3; i++){
+	    		Sleep (500);
+	    		cout << "-";
+			}
             if (seat < 1 || seat > 20) {
-                cout << "Invalid seat number!" << endl;
+                cout << "Seat Unavailable!!!" << endl;
                 return;
             }
             if (!seatStatus[seat-1]) {
                 cout << "Seat not booked!" << endl;
                 return;
             }
-            cout << "Seat " << seat << " cancelled for " << passengerNames[seat-1] << "." << endl;
-            passengerNames[seat-1] = " ";
+            cout << "Seat " << seat << " cancelled for " << psngrName[seat-1] << "." << endl;
+            psngrName[seat-1] = " ";
             seatStatus[seat-1] = false;
             fare[seat-1] = 0;
         }
+        
         void searchPassenger() {
             string name;
             bool found = false;
-            cout << "Enter passenger name to search: ";
+            cout << "Enter Passenger Name you want to Search: ";
             cin >> name;
+            cout << "Please Wait";
+	    	for(int i=0; i<3; i++){
+	    		Sleep (500);
+	    		cout << "-";
+			}
+			cout << endl;
             for (int i = 0; i < 20; i++) {
-                if (passengerNames[i] == name) {
+                if (psngrName[i] == name) {
                     found = true;
                     cout << "Passenger " << name << " found in seat " << i+1 << " with fare " << fare[i] <<"." << endl;
                 }
             }
             if (!found) {
-                cout << "Passenger " << name << " not found in the bus!" << endl;
+                cout << "Passenger " << name << " not found in the bus!!!" << endl;
             }
         }
-        void displayTotalRevenue() {
+		
+		void displayInfo(){
+			for (int i = 0; i < 20; i++) {
+				if (seatStatus[i]) {
+					cout << "Seat Number: " << i+1 << endl;
+					cout << "Passenger Name: " << psngrName[i] << endl;
+					cout << "Age: " << age << endl;
+					cout << "CNIC: " << CNIC << endl;
+					cout << "Phone Number: " << phone << endl;
+					cout << "Fare: " << fare << endl;
+					cout << "------------------------------------------" << endl;
+				}
+			}
+		}
+		
+		void displaySeatDetails() {
+			cout << "Please Wait";
+	    	for(int i=0; i<3; i++){
+	    		Sleep (500);
+	    		cout << "-";
+			}
+			cout << endl;
+            cout << "Seat Number\tPassenger Name\tFare" << endl;
+            for (int i = 0; i < 20; i++) {
+                cout << i+1 << "\t\t" << psngrName[i] << "\t\t" << fare[i] << endl;
+            }
+            cout << "------------------------------------------" << endl;
+        }
+		
+		void displayTotalRevenue() {
             double totalRevenue = 0;
             for (int i = 0; i < 20; i++) {
                 totalRevenue += fare[i];
             }
             cout << "Total revenue: " << totalRevenue << endl;
         }
+        
+};
+
+class Admin{
+	private:
+		string username;
+		string password;
+	public:
+		void menu(){
+			cout << endl << "-------------Menu-------------"<< endl << endl;
+			cout << "1. Add Bus \n2. Display Bus \n3. Search Bus \n4. Reserve Seat \n5. Cancel Seat" << endl;
+			cout << "6. Display Passengers \n7. Display Seat Details \n8. Search Passengers \n9. Calculate Fair \n10. Exit" << endl;
+		}
+		
+		Admin(string username, string password) {
+			this->username = username;
+			this->password = password;
+		}
+		bool login(string username, string password) {
+			if (this->username == username && this->password == password) {
+			return true;
+		} 
+		else {
+			return false;
+		}
+		}
+			
 };
 
 
-int main() {
-    BusReservationSystem bus1(1, "Haider", "10:00", "11:30");
-    int choice = 0;
-    while (choice != 7) {
-        cout << "------------------------------------------" << endl;
-		cout << "Menu:" << endl;
-        cout << "1. Display bus details" << endl;
-        cout << "2. Display seat details" << endl;
-        cout << "3. Book a seat" << endl;
-        cout << "4. Cancel a seat" << endl;
-        cout << "5. Total Revenue" << endl;
-        cout << "6. Search Passenger" << endl;
-        cout << "7. Quit" << endl;
-        cout << "Enter your choice: ";
-        cin >> choice;
-        switch (choice) {
-            case 1:
-                bus1.displayBusDetails();
-                break;
-            case 2:
-                bus1.displaySeatDetails();
-                break;
-            case 3:
-            	bus1.bookSeat();
-            	break;
-            case 4:
-            	bus1.cancelSeat();
-            	break;
-            case 5:
-            	bus1.displayTotalRevenue();
-            	break;
-            case 6:
-            	bus1.searchPassenger();
-            	break;
-            case 7:
-            	cout << "Thank You For Using!!!" << endl;
-            	break;
-            default:
-            	cout << "Invalid Entry!!!" << endl;
-            	break;
-            	
-        }
-    }
-    return 0;
+
+int main(){
+	cout << "================================" << endl << endl;
+	cout << "\tBUS RESERVATION SYSTEM" <<endl << endl;
+	cout << "================================" << endl << endl;
+	
+	Admin ad("admin", "password");
+	string username;
+	string password;
+	bool loggedIn = false;
+	while (!loggedIn) {
+    	cout << "\tEnter Username: ";
+    	cin >> username;
+    	cout << "\tEnter Password: ";
+    	cin >> password;
+	    if (ad.login(username, password)) {
+	    	cout << "\tPlease Wait";
+	    	for(int i=0; i<3; i++){
+	    		Sleep (500);
+	    		cout << "-";
+			}
+	        cout << "\n\tLogin successful." << endl;
+	        loggedIn = true;
+	    } 
+		else {
+        cout << "\tInvalid Username & Password. Please try again." << endl;
+    	}
+	}
+	
+	
+	Passenger psngr;
+	Bus bus("Hammad", "11:30", "8:30", "Lahore", "Shorkot");
+	
+	char again;
+	int option;
+		while(option!=10){
+			ad.menu();
+			cin >> option;
+			switch(option){
+				case 1:
+					bus.getBus();
+					break;
+				case 2:
+					bus.displayBus();
+					break;
+				case 3:
+					bus.searchBus();
+					break;
+				case 4:
+					psngr.getInfo();
+					break;
+				case 5:
+					psngr.cancelSeat();
+					break;
+				case 6:
+					psngr.displayInfo();
+					break;
+				case 7:
+					psngr.displaySeatDetails();
+					break;
+				case 8:
+					psngr.searchPassenger();
+					break;
+				case 9:
+					psngr.displayTotalRevenue();
+					break;
+				case 10:
+					cout << "TnakYou For Using Bus Reservation System!!!" << endl;
+					break;
+				default:
+					cout << "Invalid Selection!!!" << endl;
+					break;
+			}
+		}
 }
