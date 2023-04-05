@@ -24,24 +24,7 @@ class BuisnessClass: public Bus{
 		string lunch;
 		int fare = 2000;
 	public:
-		BuisnessClass(){
-			driverName = "\0";
-			arrivalTime = "\0"; 
-			departTime = "\0";
-			destination = "\0";
-			origin = "\0";
-			drinks = "\0";
-			lunch = "\0";
-		}
-		BuisnessClass(string driverName, string arrivalTime, string departTime, string destination, string origin, string drinks, string lunch){
-			this->driverName = driverName;
-			this->arrivalTime = arrivalTime;
-			this->departTime = departTime;
-			this->destination = destination;
-			this->origin = origin;
-			this->drinks = drinks;
-			this->lunch = lunch;
-		}
+		bool busadded = false;
 		
 		void getBus(){			
 			cout << "Enter Driver Name: ";
@@ -63,6 +46,7 @@ class BuisnessClass: public Bus{
 			cout << "Enter Lunch: ";
 			cin.ignore();
 			getline(cin, lunch);
+			busadded = true;
 		}
 		
 		void displayBus(){
@@ -71,6 +55,7 @@ class BuisnessClass: public Bus{
 	    		Sleep (500);
 	    		cout << "-";
 			}
+			if(busadded){
 			
 			cout << "Driver Name: " << driverName << endl;
 			cout << "Amenities: " << amenity1 + amenity2 + amenity3 << endl;
@@ -81,9 +66,13 @@ class BuisnessClass: public Bus{
 			cout << "Drinks: " << drinks << endl;
 			cout << "Lunch: " << lunch << endl;
 			cout << "Fare: " << fare << endl;
+			}
+           	else 
+           		cout << "Please Add a Bus first!!!" << endl; 
 		}
 		
 		void searchBus(){
+			if(busadded){
 			string driver;
 			cout << "Enter Driver Name: ";
 			cin >> driver;
@@ -108,11 +97,15 @@ class BuisnessClass: public Bus{
 			}
 			else
 				cout << "Bus Not Found!!!" << endl;
+			}
+           	else 
+           		cout << "Please Add a Bus first!!!" << endl; 
 		}
 		
 		int getFare(){
 			return fare;
 		}
+		
 };
 
 class Sleeper: public Bus{
@@ -121,20 +114,7 @@ class Sleeper: public Bus{
 		string amenities = "AC & Wifi";
 		int fare = 1500;
 	public:
-		Sleeper(){
-			driverName = "\0";
-			arrivalTime = "\0"; 
-			departTime = "\0";
-			destination = "\0";
-			origin = "\0";
-		}
-		Sleeper(string driverName, string arrivalTime, string departTime, string destination, string origin){
-			this->driverName = driverName;
-			this->arrivalTime = arrivalTime;
-			this->departTime = departTime;
-			this->destination = destination;
-			this->origin = origin;
-		}
+		bool busadded = false;
 		
 		void getBus(){			
 			cout << "Enter Driver Name: ";
@@ -150,9 +130,11 @@ class Sleeper: public Bus{
 			cout << "Enter Origin: ";
 			cin.ignore();
 			getline(cin, origin);
+			busadded=true;
 		}
 		
 		void displayBus(){
+			if(busadded){
 			cout << "Please Wait";
 	    	for(int i=0; i<3; i++){
 	    		Sleep (500);
@@ -167,9 +149,13 @@ class Sleeper: public Bus{
 			cout << "Destination: " << destination << endl;
 			cout << "Origin: " << origin << endl;
 			cout << "Fare: " << fare << endl;
+			}
+           	else 
+           		cout << "Please Add a Bus first!!!" << endl; 
 		}
 		
 		void searchBus(){
+			if(busadded){
 			string driver;
 			cout << "Enter Driver Name: ";
 			cin >> driver;
@@ -192,6 +178,9 @@ class Sleeper: public Bus{
 			}
 			else
 				cout << "Bus Not Found!!!" << endl;
+			}
+           	else 
+           		cout << "Please Add a Bus first!!!" << endl; 
 		}
 		
 		int getFare(){
@@ -205,20 +194,7 @@ class EconomyClass: public Bus{
 		string Amenities = "AC";
 		int fare = 1000;
 	public:
-		EconomyClass(){
-			driverName = "\0";
-			arrivalTime = "\0"; 
-			departTime = "\0";
-			destination = "\0";
-			origin = "\0";
-		}
-		EconomyClass(string driverName, string arrivalTime, string departTime, string destination, string origin){
-			this->driverName = driverName;
-			this->arrivalTime = arrivalTime;
-			this->departTime = departTime;
-			this->destination = destination;
-			this->origin = origin;
-		}
+		bool busadded = false;
 		
 		void getBus(){			
 			cout << "Enter Driver Name: ";
@@ -234,9 +210,11 @@ class EconomyClass: public Bus{
 			cout << "Enter Origin: ";
 			cin.ignore();
 			getline(cin, origin);
+			busadded=true;
 		}
 		
 		void displayBus(){
+			if(busadded){
 			cout << "Please Wait";
 	    	for(int i=0; i<3; i++){
 	    		Sleep (500);
@@ -251,9 +229,13 @@ class EconomyClass: public Bus{
 			cout << "Destination: " << destination << endl;
 			cout << "Origin: " << origin << endl;
 			cout << "Fare: " << fare << endl;
+			}
+           	else 
+           		cout << "Please Add a Bus first!!!" << endl; 
 		}
 		
 		void searchBus(){
+			if(busadded){
 			string driver;
 			cout << "Enter Driver Name: ";
 			cin >> driver;
@@ -276,6 +258,9 @@ class EconomyClass: public Bus{
 			}
 			else
 				cout << "Bus Not Found!!!" << endl;
+			}
+           	else 
+           		cout << "Please Add a Bus first!!!" << endl; 
 		}
 		
 		int getFare(){
@@ -314,13 +299,9 @@ class Passenger{
                 slprfare[i] = 0;
             }
         }
-		
-		void getInfo(){
-			int seat;
-			string name;
-			int fare;			
-			int option;
-			
+        
+        void busMenu(){
+        		
 			cout << "--------------------------------------" << endl;
 			cout << "\tBuses Available" << endl;
 			cout << "--------------------------------------" << endl << endl;
@@ -329,10 +310,19 @@ class Passenger{
 			cout << "3. Sleeper" << endl;
 			cout << "4. Exit" << endl;
 			cout << "Please Select Bus: ";
+		}
+		
+		void getInfo(){
+			int seat;
+			string name;
+			int fare;			
+			int option;
+			
+			busMenu();
 			cin >> option;
 			switch(option){
 				case 1:
-					bc.displayBus();
+					if(bc.busadded){
 					cout << "Seat Number: ";
 					cin >> seat;
 					if (seat < 1 || seat > 20) {
@@ -366,9 +356,12 @@ class Passenger{
             		bcseatStatus[seat-1] = true;
 		            bcfare[seat-1] = fare;
            			cout << "Seat " << seat << " booked for " << name << "." << endl;
+           			}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 2:
-					ec.displayBus();
+					if(ec.busadded){
 					cout << "Seat Number: ";
 					cin >> seat;
 					if (seat < 1 || seat > 20) {
@@ -402,9 +395,12 @@ class Passenger{
             		ecseatStatus[seat-1] = true;
 		            ecfare[seat-1] = fare;
            			cout << "Seat " << seat << " booked for " << name << "." << endl;
+           			}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 3:
-					slpr.displayBus();
+					if(slpr.busadded){
 					cout << "Seat Number: ";
 					cin >> seat;
 					if (seat < 1 || seat > 20) {
@@ -438,6 +434,9 @@ class Passenger{
             		slprseatStatus[seat-1] = true;
 		            slprfare[seat-1] = fare;
            			cout << "Seat " << seat << " booked for " << name << "." << endl;
+           			}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 4:
 					cout << "ThankYou for using!!!" << endl;
@@ -451,18 +450,11 @@ class Passenger{
 		void cancelSeat() {
 			int option;
 			
-			cout << "--------------------------------------" << endl;
-			cout << "\tBuses Available" << endl;
-			cout << "--------------------------------------" << endl << endl;
-			cout << "1. Buisness Class" << endl;
-			cout << "2. Economy Class" << endl;
-			cout << "3. Sleeper" << endl;
-			cout << "4. Exit" << endl;
-			cout << "Please Select Bus: ";
+			busMenu();
 			cin >> option;
 			switch(option){
 				case 1:
-					bc.displayBus();
+					if(bc.busadded){
 					int seat;
 					cout << "Seat Number: ";
             		cin >> seat;
@@ -483,9 +475,13 @@ class Passenger{
 		            bcName[seat-1] = " ";
 		            bcseatStatus[seat-1] = false;
 		            bcfare[seat-1] = 0;
+		            }
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
-				case 2:
-					ec.displayBus();
+				case 2:					
+					if(ec.busadded){
+						int seat;
 					cout << "Seat Number: ";
             		cin >> seat;
             		cout << "Please Wait";
@@ -505,9 +501,13 @@ class Passenger{
 		            ecName[seat-1] = " ";
 		            ecseatStatus[seat-1] = false;
 		            ecfare[seat-1] = 0;
+		            }
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 3:
-					slpr.displayBus();
+					if(slpr.busadded){					
+					int seat;
 					cout << "Seat Number: ";
             		cin >> seat;
             		cout << "Please Wait";
@@ -527,6 +527,9 @@ class Passenger{
 		            slprName[seat-1] = " ";
 		            slprseatStatus[seat-1] = false;
 		            slprfare[seat-1] = 0;
+		            }
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 4:
 					cout << "ThankYou for using!!!" << endl;
@@ -542,18 +545,11 @@ class Passenger{
 			string name;
 			bool found = false;
 			
-			cout << "--------------------------------------" << endl;
-			cout << "\tBuses Available" << endl;
-			cout << "--------------------------------------" << endl << endl;
-			cout << "1. Buisness Class" << endl;
-			cout << "2. Economy Class" << endl;
-			cout << "3. Sleeper" << endl;
-			cout << "4. Exit" << endl;
-			cout << "Please Select Bus: ";
+			busMenu();
 			cin >> option;
 			switch(option){
 				case 1:
-					bc.displayBus();
+					if(bc.busadded){
             		cout << "Enter Passenger Name you want to Search: ";
             		cin >> name;
             		cout << "Please Wait";
@@ -571,9 +567,12 @@ class Passenger{
 		            if (!found) {
 		                cout << "Passenger " << name << " not found in the bus!!!" << endl;
 	            	}
+	            	}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 2:
-					ec.displayBus();
+					if(ec.busadded){					
             		cout << "Enter Passenger Name you want to Search: ";
             		cin >> name;
             		cout << "Please Wait";
@@ -591,9 +590,12 @@ class Passenger{
 		            if (!found) {
 		                cout << "Passenger " << name << " not found in the bus!!!" << endl;
 	            	}
+	            	}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 3:
-					slpr.displayBus();
+					if(slpr.busadded){
             		cout << "Enter Passenger Name you want to Search: ";
             		cin >> name;
             		cout << "Please Wait";
@@ -611,6 +613,9 @@ class Passenger{
 		            if (!found) {
 		                cout << "Passenger " << name << " not found in the bus!!!" << endl;
 	            	}
+	            	}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 4:
 					cout << "ThankYou for using!!!" << endl;
@@ -623,19 +628,11 @@ class Passenger{
 		
 		void displayInfo(){
 			int option;
-			
-			cout << "--------------------------------------" << endl;
-			cout << "\tBuses Available" << endl;
-			cout << "--------------------------------------" << endl << endl;
-			cout << "1. Buisness Class" << endl;
-			cout << "2. Economy Class" << endl;
-			cout << "3. Sleeper" << endl;
-			cout << "4. Exit" << endl;
-			cout << "Please Select Bus: ";
+			busMenu();
 			cin >> option;
 			switch(option){
 				case 1:
-					bc.displayBus();
+					if(bc.busadded){					
 					for (int i = 0; i < 20; i++) {
 						if (bcseatStatus[i]) {
 						cout << "Seat Number: " << i+1 << endl;
@@ -646,10 +643,13 @@ class Passenger{
 						cout << "Fare: " << bcfare << endl;
 						cout << "------------------------------------------" << endl;
 						}
-					}	
+					}
+					}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 	
 					break;
 				case 2:
-					ec.displayBus();
+					if(ec.busadded){					
 					for (int i = 0; i < 20; i++) {
 						if (ecseatStatus[i]) {
 						cout << "Seat Number: " << i+1 << endl;
@@ -660,10 +660,13 @@ class Passenger{
 						cout << "Fare: " << ecfare << endl;
 						cout << "------------------------------------------" << endl;
 						}
-					}	
+					}
+					}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 3:
-					slpr.displayBus();
+					if(slpr.busadded){				
 					for (int i = 0; i < 20; i++) {
 						if (slprseatStatus[i]) {
 						cout << "Seat Number: " << i+1 << endl;
@@ -675,6 +678,9 @@ class Passenger{
 						cout << "------------------------------------------" << endl;
 						}
 					}	
+					}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 4:
 					cout << "ThankYou for using!!!" << endl;
@@ -687,19 +693,11 @@ class Passenger{
 		
 		void displaySeatDetails() {
 			int option;
-			
-			cout << "--------------------------------------" << endl;
-			cout << "\tBuses Available" << endl;
-			cout << "--------------------------------------" << endl << endl;
-			cout << "1. Buisness Class" << endl;
-			cout << "2. Economy Class" << endl;
-			cout << "3. Sleeper" << endl;
-			cout << "4. Exit" << endl;
-			cout << "Please Select Bus: ";
+			busMenu();
 			cin >> option;
 			switch(option){
 				case 1:
-					bc.displayBus();
+					if(bc.busadded){
 					cout << "Please Wait";
 	    			for(int i=0; i<3; i++){
 	    				Sleep (500);
@@ -711,9 +709,12 @@ class Passenger{
                 		cout << i+1 << "\t\t" << bcName[i] << "\t\t" << bcfare[i] << endl;
             		}
             		cout << "------------------------------------------" << endl;
+            		}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 2:
-					ec.displayBus();
+					if(ec.busadded){					
 					cout << "Please Wait";
 	    			for(int i=0; i<3; i++){
 	    				Sleep (500);
@@ -725,9 +726,12 @@ class Passenger{
                 		cout << i+1 << "\t\t" << ecName[i] << "\t\t" << ecfare[i] << endl;
             		}
             		cout << "------------------------------------------" << endl;
+            		}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 3:
-					slpr.displayBus();
+					if(slpr.busadded){
 					cout << "Please Wait";
 	    			for(int i=0; i<3; i++){
 	    				Sleep (500);
@@ -739,6 +743,9 @@ class Passenger{
                 		cout << i+1 << "\t\t" << slprName[i] << "\t\t" << slprfare[i] << endl;
             		}
             		cout << "------------------------------------------" << endl;
+            		}
+           			else 
+           				cout << "Please Add a Bus first!!!" << endl; 
 					break;
 				case 4:
 					cout << "ThankYou for using!!!" << endl;
@@ -814,12 +821,17 @@ int main(){
         cout << "\tInvalid Username & Password. Please try again." << endl;
     	}
 	}
+
+	system ("cls");
 	
+	cout << "================================" << endl << endl;
+	cout << "\tBUS RESERVATION SYSTEM" <<endl << endl;
+	cout << "================================" << endl << endl;
 	
 	Passenger psngr;
-	BuisnessClass bc("Hammad", "11:30", "8:30", "Lahore", "Shorkot", "Cold Drinks & Water", "Cookies & Chips");
-	EconomyClass ec("Samad", "11:30", "8:30", "Lahore", "Shorkot");
-	Sleeper slpr("Saim", "11:30", "8:30", "Lahore", "Shorkot");
+	BuisnessClass bc;
+	EconomyClass ec;
+	Sleeper slpr;
 	
 	char again;
 	int option;
